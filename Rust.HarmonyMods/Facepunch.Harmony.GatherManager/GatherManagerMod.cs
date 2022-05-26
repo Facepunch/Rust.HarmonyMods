@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Facepunch.Extend;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -60,11 +61,11 @@ namespace Facepunch.Harmony.GatherManager
         {
             if ( !context.IsAdmin() )
             {
-                context.AddReply( "Not admin" );
                 return false;
             }
 
-            var split = context.RawCommand.Split( ' ' );
+            // If this gets added to modloader we will have a better command helper than string[]
+            var split = context.RawCommand.SplitQuotesStrings();
 
             var command = split[ 0 ];
 
@@ -78,7 +79,7 @@ namespace Facepunch.Harmony.GatherManager
                 
                 if ( float.TryParse( split[1], out var amount ) == false )
                 {
-                    context.SetReply( $"{split[1]} is not a valid amount" );
+                    context.AddReply( $"{split[1]} is not a valid amount" );
                     return true;
                 }
 
