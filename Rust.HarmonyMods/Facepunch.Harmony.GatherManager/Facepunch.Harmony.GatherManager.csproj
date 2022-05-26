@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<ProjectGuid>{3ADF00F4-DB15-457F-A893-743DC80C98FB}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<RootNamespace>Facepunch.Harmony.GatherManager</RootNamespace>
+		<AssemblyName>Facepunch.Harmony.GatherManager</AssemblyName>
+		<TargetFramework>net4.6.2</TargetFramework>
+		<Deterministic>true</Deterministic>
+		<Configurations>Debug;Release;Staging</Configurations>
+		<Company>Facepunch Studios</Company>
+		<Product>Facepunch.Harmony.GatherManager</Product>
+		<Copyright>Copyright © Facepunch Studios 2022</Copyright>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="System.Net.Http" />
+		<Reference Include=".references\RustDedicated_Data\Managed\0Harmony.dll" />
+		<Reference Include=".references\RustDedicated_Data\Managed\Assembly-CSharp.dll" />
+		<Reference Include=".references\RustDedicated_Data\Managed\Assembly-CSharp-firstpass.dll" />
+		<Reference Include=".references\RustDedicated_Data\Managed\Facepunch.Console.dll" />
+		<Reference Include=".references\RustDedicated_Data\Managed\Facepunch.Network.dll" />
+		<Reference Include=".references\RustDedicated_Data\Managed\Facepunch.System.dll" />
+		<Reference Include=".references\RustDedicated_Data\Managed\Facepunch.Unity.dll" />
+		<Reference Include=".references\RustDedicated_Data\Managed\Facepunch.UnityEngine.dll" />
+		<Reference Include=".references\RustDedicated_Data\Managed\Newtonsoft.Json.dll" />
+		<Reference Include=".references\RustDedicated_Data\Managed\Rust.Data.dll" />
+		<Reference Include=".references\RustDedicated_Data\Managed\Rust.Global.dll" />
+		<Reference Include=".references\RustDedicated_Data\Managed\UnityEngine.dll" />
+		<Reference Include=".references\RustDedicated_Data\Managed\UnityEngine.CoreModule.dll" />
+		<Reference Include=".references\RustDedicated_Data\Managed\0Harmony.dll" />
+	</ItemGroup>
+	<!-- Download server dlls to the .references folder at the project level-->
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<DownloadFile SourceUrl="https://github.com/SteamRE/DepotDownloader/releases/download/DepotDownloader_2.4.6/depotdownloader-2.4.6.zip" DestinationFolder="$(OutDir)/download/" DestinationFileName="depot-downloader.zip">
+			<Output TaskParameter="DownloadedFile" ItemName="Content" />
+		</DownloadFile>
+		<Unzip SourceFiles="$(OutDir)/download/depot-downloader.zip" DestinationFolder="$(OutputPath)/depot-downloader/" OverwriteReadOnlyFiles="true" />
+		<WriteLinesToFile File="./.references/filelist-whitelist.txt" Lines="regex:.RustDedicated_Data\\Managed\\*\.dll" Overwrite="true" Encoding="Unicode" />
+		<Exec Command="$(OutDir)depot-downloader\\DepotDownloader.exe -app 258550 -branch public -dir ./.references/ -filelist ./.references/filelist-whitelist.txt" />
+	</Target>
+	<Import Project="..\Facepunch.Harmony.Weaver\Facepunch.Harmony.Weaver.projitems" Label="Shared" />
+
+</Project>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32505.173
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Facepunch.Harmony.Weaver", "Facepunch.Harmony.Weaver\Facepunch.Harmony.Weaver.shproj", "{ABB68300-D90B-4854-86D3-4B910A8EB786}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facepunch.Harmony.GatherManager", "Facepunch.Harmony.GatherManager\Facepunch.Harmony.GatherManager.csproj", "{3ADF00F4-DB15-457F-A893-743DC80C98FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3ADF00F4-DB15-457F-A893-743DC80C98FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ADF00F4-DB15-457F-A893-743DC80C98FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ADF00F4-DB15-457F-A893-743DC80C98FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ADF00F4-DB15-457F-A893-743DC80C98FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A995A93A-BDAD-4F82-8F85-67D610A12954}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Facepunch.Harmony.Weaver\Facepunch.Harmony.Weaver.projitems*{3adf00f4-db15-457f-a893-743dc80c98fb}*SharedItemsImports = 5
+		Facepunch.Harmony.Weaver\Facepunch.Harmony.Weaver.projitems*{abb68300-d90b-4854-86d3-4b910a8eb786}*SharedItemsImports = 13
+	EndGlobalSection
+EndGlobal

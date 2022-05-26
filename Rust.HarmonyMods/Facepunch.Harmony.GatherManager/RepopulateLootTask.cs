@@ -1,0 +1,57 @@
+﻿using System.Collections;
+using System.Diagnostics;
+using System.Linq;
+
+namespace Facepunch.Harmony.GatherManager
+{
+    public class RepopulateLootTask
+    {
+        public bool Finished { get; private set; }
+
+        public int EntityIndex { get; private set; }
+
+        public int EntityCount { get; private set; }
+
+        public RepopulateLootTask()
+        {
+
+        }
+
+        public void Start()
+        {
+            // Use ServerMgr since we arent oxide & needing to hotload
+            ServerMgr.Instance.StartCoroutine( Coroutine() );
+        }
+
+        private IEnumerator Coroutine()
+        {
+            var entities = BaseNetworkable.serverEntities.OfType<LootContainer>().ToArray();
+
+            EntityCount = entities.Length;
+
+            yield return null;
+
+            Stopwatch watch = Stopwatch.StartNew();
+
+            foreach( var entity in entities )
+            {
+                EntityIndex++;
+
+                if ( watch.ElapsedMilliseconds > 20 )
+                {
+                    yield return null;
+                    watch.Restart();
+                }
+
+                if ( entity == null || entity.IsDestroyed )
+                {
+                    continue;
+                }
+
+                entity.SpawnLoot();
+            }
+
+            Finished = true;
+        }
+    }
+}
