@@ -27,6 +27,7 @@
 		<Reference Include=".references\RustDedicated_Data\Managed\UnityEngine.dll" />
 		<Reference Include=".references\RustDedicated_Data\Managed\UnityEngine.CoreModule.dll" />
 		<Reference Include=".references\RustDedicated_Data\Managed\0Harmony.dll" />
+		<Reference Include=".references\RustDedicated_Data\Managed\Facepunch.Steamworks.Win64.dll" />
 	</ItemGroup>
 	<!-- Download server dlls to the .references folder at the project level-->
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">

@@ -45,11 +45,14 @@ namespace Facepunch.Harmony.GatherManager
 
         public void OnLootSpawned( OnLootSpawnedArgs args )
         {
-            foreach( var item in args.Entity.inventory.itemList )
+            foreach( var inventory in args.Inventories )
             {
-                float scale = GetItemScale( item.info.shortname );
+                foreach ( var item in inventory.itemList )
+                {
+                    float scale = GetItemScale( item.info.shortname );
 
-                item.amount = Mathf.FloorToInt( item.amount * scale );
+                    item.amount = Mathf.FloorToInt( item.amount * scale );
+                }
             }
         }
 
@@ -57,6 +60,7 @@ namespace Facepunch.Harmony.GatherManager
         {
             if ( !context.IsAdmin() )
             {
+                context.AddReply( "Not admin" );
                 return false;
             }
 
@@ -71,22 +75,19 @@ namespace Facepunch.Harmony.GatherManager
                     context.AddReply( $"gather.scale: {_globalScale}" );
                     return true;
                 }
-                else if ( split.Length < 3 )
+                
+                if ( float.TryParse( split[1], out var amount ) == false )
                 {
-                    context.SetReply( "gather.scale {resource} {amount}" );
+                    context.SetReply( $"{split[1]} is not a valid amount" );
                     return true;
                 }
-                float amount = float.Parse( split[ 2 ] );
-                switch ( split[ 1 ] )
-                {
-                    case "all":
-                    case "*":
-                        {
-                            SetGatherScale( amount );
-                            context.AddReply( $"Set gather scale to '{amount}'" );
-                            return true;
-                        }
-                }
+
+                amount = Mathf.Clamp( amount, 1, 1000 );
+
+                SetGatherScale( amount );
+                context.AddReply( $"Gather.scale: {amount}" );
+
+                return true;
             }
             else if ( command == "gather" )
             {
@@ -99,7 +100,7 @@ namespace Facepunch.Harmony.GatherManager
                 return false;
             }
 
-            context.SetReply( "Ended up at end of gather command?" );
+            context.AddReply( "Ended up at end of gather command?" );
             return true;
         }
 
@@ -108,7 +109,7 @@ namespace Facepunch.Harmony.GatherManager
             context.AddReply( GetGatherDescription() );
         }
 
-        private string GetGatherDescription()
+        public string GetGatherDescription()
         {
             StringBuilder builder = new StringBuilder();
 

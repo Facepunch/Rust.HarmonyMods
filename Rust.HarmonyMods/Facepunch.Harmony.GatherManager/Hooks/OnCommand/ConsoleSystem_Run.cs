@@ -23,6 +23,11 @@ namespace Facepunch.Harmony.GatherManager
                 if ( reply != null )
                 {
                     __result = reply;
+
+                    if ( __0.IsServer && __0.PrintOutput && reply.Length > 0 )
+                    {
+                        DebugEx.Log( reply );
+                    }
                 }
 
                 return result;

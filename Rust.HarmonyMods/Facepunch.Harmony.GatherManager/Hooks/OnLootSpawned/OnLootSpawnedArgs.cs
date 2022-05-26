@@ -8,7 +8,8 @@ namespace Facepunch.Harmony.GatherManager
 {
     public class OnLootSpawnedArgs : Pool.IPooled
     {
-        public LootContainer Entity { get; internal set; }
+        public BaseEntity Entity { get; internal set; }
+        public List<ItemContainer> Inventories { get; } = new List<ItemContainer>();
 
         public void EnterPool()
         {
@@ -18,6 +19,7 @@ namespace Facepunch.Harmony.GatherManager
         public void LeavePool()
         {
             Entity = null;
+            Inventories.Clear();
         }
     }
 }

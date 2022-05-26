@@ -10,7 +10,6 @@ using UnityEngine;
 
 namespace Facepunch.Harmony.GatherManager
 {
-
     [HarmonyPatch( typeof( ResourceDispenser ), "GiveResourceFromItem" )]
     internal class ResourceDispenser_GiveResourceFromItem : BaseTranspileHook
     {

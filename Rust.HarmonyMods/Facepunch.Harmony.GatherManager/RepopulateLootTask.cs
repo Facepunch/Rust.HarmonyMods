@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Linq;
 
@@ -20,6 +21,7 @@ namespace Facepunch.Harmony.GatherManager
         public void Start()
         {
             // Use ServerMgr since we arent oxide & needing to hotload
+            // Only refreshes loot, its rare we need to do this anyways
             ServerMgr.Instance.StartCoroutine( Coroutine() );
         }
 
@@ -35,20 +37,27 @@ namespace Facepunch.Harmony.GatherManager
 
             foreach( var entity in entities )
             {
-                EntityIndex++;
-
                 if ( watch.ElapsedMilliseconds > 20 )
                 {
                     yield return null;
                     watch.Restart();
                 }
 
-                if ( entity == null || entity.IsDestroyed )
+                try
                 {
-                    continue;
-                }
+                    EntityIndex++;
 
-                entity.SpawnLoot();
+                    if ( entity == null || entity.IsDestroyed )
+                    {
+                        continue;
+                    }
+
+                    entity.SpawnLoot();
+                }
+                catch ( Exception ex )
+                {
+                    UnityEngine.Debug.LogException( ex );
+                }
             }
 
             Finished = true;

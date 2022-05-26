@@ -469,7 +469,7 @@ namespace Facepunch.Harmony.Weaver
 
         public bool MoveForward()
         {
-            if ( currentIndex >= instructions.Count )
+            if ( currentIndex >= instructions.Count - 1 )
             {
                 return false;
             }
@@ -477,6 +477,16 @@ namespace Facepunch.Harmony.Weaver
             currentIndex++;
 
             return true;
+        }
+
+        public void MoveToEnd()
+        {
+            while( MoveForward() )
+            {
+
+            }
+
+            MoveBack();
         }
 
         public bool MoveBack()
