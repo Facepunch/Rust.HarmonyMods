@@ -12,6 +12,10 @@ To configure the gather rate, use various ConVars:
 
 `gather.rate {amount}`
 
+`crafting.rate {amount}`
+
+`blueprints.grantall {true/false}`
+
 # Bugs / Features
 
 Create a new issue in github :)
