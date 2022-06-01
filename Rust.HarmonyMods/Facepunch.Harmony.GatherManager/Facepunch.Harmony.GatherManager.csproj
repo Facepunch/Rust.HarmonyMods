@@ -10,6 +10,7 @@
 		<Company>Facepunch Studios</Company>
 		<Product>Facepunch.Harmony.GatherManager</Product>
 		<Copyright>Copyright © Facepunch Studios 2022</Copyright>
+	<AssemblyVersion>1.0.1</AssemblyVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="System.Net.Http" />

@@ -1,6 +1,7 @@
 ﻿using Facepunch.Extend;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ namespace Facepunch.Harmony.GatherManager
         public static readonly GatherManagerMod Instance = new GatherManagerMod();
 
         private float _globalScale = 1f;
+        private float _craftScale = 1f;
+        private bool _unlockAllBps = false;
 
         private void Log(string message )
         {
@@ -28,6 +31,11 @@ namespace Facepunch.Harmony.GatherManager
             _globalScale = newAmount;
 
             OnLootScaleChanged();
+        }
+
+        private void SetCraftSpeed( float newAmount )
+        {
+            _craftScale = newAmount;
         }
 
         private void OnLootScaleChanged()
@@ -55,6 +63,19 @@ namespace Facepunch.Harmony.GatherManager
                     item.amount = Mathf.FloorToInt( item.amount * scale );
                 }
             }
+        }
+
+        public void OnPlayerConnected( OnPlayerConnectedArgs args )
+        {
+            if ( _unlockAllBps )
+            {
+                args.Player.blueprints.UnlockAll();
+            }
+        }
+
+        public void GetCraftDuration( GetCraftDurationArgs args )
+        {
+            args.CraftDurationScale = _craftScale;
         }
 
         public bool OnCommand( CommandContext context )
@@ -94,6 +115,43 @@ namespace Facepunch.Harmony.GatherManager
             {
                 OnGatherIngameCommand( context );
                 return true;
+            }
+            else if ( command == "blueprints.grantall" )
+            {
+                if ( split.Length < 2 )
+                {
+                    context.AddReply( $"blueprints.grantall: {_unlockAllBps}" );
+                    return true;
+                }
+
+                bool value = bool.Parse( split[ 1 ] );
+
+                _unlockAllBps = value;
+            }
+            else if ( command == "craft.scale" )
+            {
+                if ( split.Length < 2 )
+                {
+                    context.AddReply( $"craft.scale: {_craftScale}" );
+                    return true;
+                }
+
+                if ( float.TryParse( split[ 1 ], out var amount ) == false )
+                {
+                    context.AddReply( $"{split[ 1 ]} is not a valid amount" );
+                    return true;
+                }
+
+                if ( amount > 1 )
+                {
+                    context.AddReply( "Value too high! Use decimals: '0.5' = 1/2 craft time" );
+                    return true;
+                }
+
+                amount = Mathf.Clamp( amount, 0.01f, 1f );
+
+                SetCraftSpeed( amount );
+                context.AddReply( $"craft.scale: {amount}" );
             }
             else
             {

@@ -147,6 +147,38 @@ namespace Facepunch.Harmony.Weaver
             }
         }
 
+        protected void StoreLocal( int index )
+        {
+            switch ( index )
+            {
+                case 0:
+                    {
+                        Inject( OpCodes.Stloc_0 );
+                        return;
+                    }
+                case 1:
+                    {
+                        Inject( OpCodes.Stloc_1 );
+                        return;
+                    }
+                case 2:
+                    {
+                        Inject( OpCodes.Stloc_2 );
+                        return;
+                    }
+                case 3:
+                    {
+                        Inject( OpCodes.Stloc_3 );
+                        return;
+                    }
+                default:
+                    {
+                        Inject( OpCodes.Stloc_S, index );
+                        return;
+                    }
+            }
+        }
+
         protected void LoadBool( bool state )
         {
             if ( state )
