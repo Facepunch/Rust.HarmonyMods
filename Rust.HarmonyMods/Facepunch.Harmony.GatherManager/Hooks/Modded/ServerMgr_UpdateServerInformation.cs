@@ -1,8 +1,8 @@
 ﻿using Harmony;
-using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -13,6 +13,18 @@ namespace Facepunch.Harmony.GatherManager
     internal class ServerMgr_UpdateServerInformation
     {
         private static string _realDescription;
+
+        private static PropertyInfo property_GameTags = AccessTools.TypeByName( "Steamworks.SteamServer" ).GetProperty( "GameTags", BindingFlags.Public | BindingFlags.Static );
+
+        private static string GetGameTags()
+        {
+            return property_GameTags.GetValue( null ) as string;
+        }
+
+        public static void SetGameTags( string value )
+        {
+            property_GameTags.SetValue( null, value );
+        }
 
         [HarmonyPrefix]
         static void Prefix()
@@ -34,15 +46,16 @@ namespace Facepunch.Harmony.GatherManager
         {
             try
             {
-                // Set server as modded
-                if ( !SteamServer.GameTags.Contains(",modded") )
-                {
-                    SteamServer.GameTags += ",modded";
-                }
-
                 if ( _realDescription != null )
                 {
                     ConVar.Server.description = _realDescription;
+                }
+
+                // Set server as modded
+                string tags = GetGameTags();
+                if ( !tags.Contains(",modded") )
+                {
+                    SetGameTags( tags + ",modded" );
                 }
             }
             catch ( Exception ex )

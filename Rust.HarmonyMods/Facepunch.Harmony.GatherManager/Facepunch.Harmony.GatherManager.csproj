@@ -10,7 +10,7 @@
 		<Company>Facepunch Studios</Company>
 		<Product>Facepunch.Harmony.GatherManager</Product>
 		<Copyright>Copyright © Facepunch Studios 2022</Copyright>
-	<AssemblyVersion>1.0.1</AssemblyVersion>
+	<AssemblyVersion>1.1.1</AssemblyVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="System.Net.Http" />
@@ -28,7 +28,6 @@
 		<Reference Include=".references\RustDedicated_Data\Managed\UnityEngine.dll" />
 		<Reference Include=".references\RustDedicated_Data\Managed\UnityEngine.CoreModule.dll" />
 		<Reference Include=".references\RustDedicated_Data\Managed\0Harmony.dll" />
-		<Reference Include=".references\RustDedicated_Data\Managed\Facepunch.Steamworks.Win64.dll" />
 	</ItemGroup>
 	<!-- Download server dlls to the .references folder at the project level-->
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">

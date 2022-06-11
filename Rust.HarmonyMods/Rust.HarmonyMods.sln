@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Facepunch.Harmony.Weaver", "Facepunch.Harmony.Weaver\Facepunch.Harmony.Weaver.shproj", "{ABB68300-D90B-4854-86D3-4B910A8EB786}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facepunch.Harmony.GatherManager", "Facepunch.Harmony.GatherManager\Facepunch.Harmony.GatherManager.csproj", "{3ADF00F4-DB15-457F-A893-743DC80C98FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Facepunch.Harmony.GatherManager", "Facepunch.Harmony.GatherManager\Facepunch.Harmony.GatherManager.csproj", "{3ADF00F4-DB15-457F-A893-743DC80C98FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
