@@ -1,6 +1,6 @@
 # Installation
 
-Ensure there is a folder named `HarmonyMods` beside `RustDedicate.exe`. Download the latest version of the mod from Releases & paste it in the `HarmonyMods` folder. Look below for configuration details.
+Ensure there is a folder named `HarmonyMods` beside `RustDedicated.exe`. Download the latest version of the mod from Releases & paste it in the `HarmonyMods` folder. Look below for configuration details.
 
 # GatherManager
 
@@ -10,9 +10,9 @@ It will provide a `/gather` command for players to get the latest gather rate & 
 
 To configure the gather rate, use various ConVars:
 
-`gather.rate {amount}`
+`gather.scale {amount}`
 
-`crafting.rate {amount}`
+`crafting.scale {amount}`
 
 `blueprints.grantall {true/false}`
 

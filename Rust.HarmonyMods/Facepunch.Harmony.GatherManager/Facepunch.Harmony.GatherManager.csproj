@@ -30,13 +30,23 @@
 		<Reference Include=".references\RustDedicated_Data\Managed\0Harmony.dll" />
 	</ItemGroup>
 	<!-- Download server dlls to the .references folder at the project level-->
+
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<PropertyGroup>
+			<BranchId>public</BranchId>
+			<BranchId Condition="'$(Configuration)'=='Debug-Staging' Or '$(Configuration)'=='Release-Staging'">staging</BranchId>
+			<FileList>
+				regex:RustDedicated_Data/Managed/.+\.dll
+			</FileList>
+		</PropertyGroup>
 		<DownloadFile SourceUrl="https://github.com/SteamRE/DepotDownloader/releases/download/DepotDownloader_2.4.6/depotdownloader-2.4.6.zip" DestinationFolder="$(OutDir)/download/" DestinationFileName="depot-downloader.zip">
 			<Output TaskParameter="DownloadedFile" ItemName="Content" />
 		</DownloadFile>
 		<Unzip SourceFiles="$(OutDir)/download/depot-downloader.zip" DestinationFolder="$(OutputPath)/depot-downloader/" OverwriteReadOnlyFiles="true" />
-		<WriteLinesToFile File="./.references/filelist-whitelist.txt" Lines="regex:.RustDedicated_Data\\Managed\\*\.dll" Overwrite="true" Encoding="Unicode" />
-		<Exec Command="$(OutDir)depot-downloader\\DepotDownloader.exe -app 258550 -branch public -dir ./.references/ -filelist ./.references/filelist-whitelist.txt" />
+
+		<WriteLinesToFile File="./.references/filelist-whitelist.txt" Lines="$(FileList)" Overwrite="true" Encoding="Unicode" />
+		<Exec Command="$(OutDir)depot-downloader\\DepotDownloader.exe -app 258550 -branch $(BranchId) -dir ./.references/ -filelist ./.references/filelist-whitelist.txt" />
+
 	</Target>
 	<Import Project="..\Facepunch.Harmony.Weaver\Facepunch.Harmony.Weaver.projitems" Label="Shared" />
 
